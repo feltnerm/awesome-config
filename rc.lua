@@ -16,7 +16,7 @@ revelation  = require("revelation")
 -- Themes define colours, icons, apps, and wallpapers
 root_dir        = awful.util.getdir("config")
 env = {
-    theme       = "wombat",
+    theme       = "sunjack",
     themes_dir  = root_dir .. "/themes/",
     icons_dir   = root_dir .. "/icons/",
     terminal    = "terminal",
@@ -29,11 +29,11 @@ env = {
 -- {{{ Dependencies
 require("lib/debug")
 require("lib/theme")
-require("lib/bindings")
 require("lib/menu")
 require("lib/tags")
 require("lib/widgets")
 require("lib/rules")
+require("lib/bindings")
 require("lib/signals")
 require("lib/startup")
 --require("lib/shifty")
