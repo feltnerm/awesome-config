@@ -142,6 +142,14 @@ customkeys = {
     -- {{{ System Stat(us)
 }
 globalkeys = awful.util.table.join(globalkeys,
+    awful.key({ modkey }, "F2", 
+            function()
+              awful.prompt.run({ prompt = "SSH: "},
+              mypromptbox[mouse.screen].widget,
+              function (s)
+                awful.util.spawn(env.terminal .. " -T SSH -e 'ssh " .. s .. " '")
+              end)
+            end),
     awful.key({ modkey }, "F12", 
             function() 
                 awful.util.spawn(env.terminal .. " --hide-menubar --hide-toolbars -T htop -e htop") 
@@ -206,7 +214,6 @@ globalkeys = awful.util.table.join(globalkeys,
         function() 
             awful.util.spawn("gvim") 
         end)
-
     -- }}}
 )
 -- }}}
