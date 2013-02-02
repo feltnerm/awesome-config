@@ -16,23 +16,25 @@ revelation  = require("revelation")
 -- Themes define colours, icons, apps, and wallpapers
 root_dir        = awful.util.getdir("config")
 env = {
-    theme       = "wombat",
+  -- byte
+    theme       = "fhuizing",
     themes_dir  = root_dir .. "/themes/",
     icons_dir   = root_dir .. "/icons/",
-    terminal    = "terminal",
+    terminal    = "xfce4-terminal",
     editor      = "gvim",
-    browser     = "chromium",
+    browser     = "google-chrome",
     modkey      = "Mod4",
 }
 -- }}}
 
 -- {{{ Dependencies
+require("lib/helpers")
 require("lib/debug")
 require("lib/theme")
-require("lib/bindings")
 require("lib/menu")
 require("lib/tags")
 require("lib/widgets")
+require("lib/bindings")
 require("lib/rules")
 require("lib/signals")
 require("lib/startup")

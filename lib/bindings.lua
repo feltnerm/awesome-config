@@ -12,10 +12,42 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    -- Client Menu
+    awful.key({ modkey            }, "c", function () awful.menu.clients() end),
+    --
+    -- Desktop Menu
+    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+
+    -- Standard program
+    awful.ful({ modkey,           }, "Return", function () awful.util.spawn(env.terminal) end),
+    awful.key({ modkey,           }, "semicolon", function () 
+      local matcher = function (c) 
+        return awful.rules.match(c, { class = "xfce4-terminal" })
+      end
+      awful.client.run_or_raise('xfce4-terminal --tab', matcher)
+      end),
+
+    -- Prompt
+    awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
+
+    -- Menubar
+    --awful.key({ modkey }, "p", function() menubar.show() end)
+    
+    -- Restart
+    awful.key({ modkey, "Control", "Alt" }, "r", awesome.restart),
+
+    -- Quit
+    awful.key({ modkey, "Control", "Alt" }, "q", awesome.quit),
+
+    -- Restore client
+    awful.key({ modkey, "Control" }, "n", awful.client.restore),
+
+    -- Tag Switching
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
+    -- Client Switching
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -26,7 +58,6 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -42,37 +73,33 @@ globalkeys = awful.util.table.join(
             end
         end),
 
-    -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(env.terminal) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey,           }, "period",  function () awful.tag.incmwfact( 0.05)    end),
+    awful.key({ modkey,           }, "comma",   function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey,           }, "next",    function () awful.layout.inc(layouts,  1) end),
+    awful.key({ modkey,           }, "prior",   function () awful.layout.inc(layouts, -1) end)
+    
+    --awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    --awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
+    --awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    --awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
-
-    awful.key({ modkey, "Control" }, "n", awful.client.restore),
-
-    -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    -- awful.key({ modkey }, "x",
+    --           function ()
+    --               awful.prompt.run({ prompt = "Run Lua code: " },
+    --               mypromptbox[mouse.screen].widget,
+    --               awful.util.eval, nil,
+    --               awful.util.getdir("cache") .. "/history_eval")
+    --           end),
+    --
 )
 
 clientkeys = awful.util.table.join(
+    -- Moving clients between screens
+    awful.key({ modkey, "Control" }, "Left",   function (c) awful.client.movetoscreen(c) end),
+    awful.key({ modkey, "Control" }, "Right",   function (c) awful.client.movetoscreen(c) end),
+    awful.key({ modkey, "Shift"   }, "Left",    function (c) awful.client.movetotag(c) end),
+    awful.key({ modkey, "Shift"   }, "Right",    function (c) awful.client.movetotag(c) end),
+
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
@@ -159,6 +186,7 @@ globalkeys = awful.util.table.join(globalkeys,
             awful.util.spawn(env.terminal .. " --hide-menubar --hide-toolbars -T ranger -e ranger")
         end),
     --- }}}
+
     --- {{{ Multimedia
    awful.key({ }, "XF86AudioPlay",
         function() 
@@ -192,19 +220,15 @@ globalkeys = awful.util.table.join(globalkeys,
         function()
             awful.util.spawn("xrandr --auto")
         end),
-    awful.key({ modkey }, "Menu",
-        function()
-            os.execute(env.terminal .. " --hide-menubar --hide-toolbars -T ncmpcpp -e ncmpcpp")
-        end),
     --- }}}
+
     -- {{{ Apps
     awful.key({ modkey }, "b", 
         function() 
-            awful.util.spawn("chromium") 
-        end),
-    awful.key({ modkey }, "v", 
-        function() 
-            awful.util.spawn("gvim") 
+            local matcher = function (c)
+              return awful.rules.match(c, { class = "google-chrome" })
+            end
+            awful.client.run_or_raise("google-chrome", matcher) 
         end)
 
     -- }}}

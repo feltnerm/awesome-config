@@ -13,14 +13,35 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
-                     buttons = clientbuttons } },
-    { rule_any = { name = {"ncmpcpp", "alsamixer"}}, properties = { tag = tags[1][3] }},
-    { rule_any = { name = {"slurm", "htop", "wicd", "ranger"}}, properties = { tag = tags[1][2], switchtotag = true}},
-    { rule = { class = "Gvim" }, properties = { tag = tags[1][6], switchtotag = true }},
-    { rule = { name = "console" }, properties = { tag = tags[1][5], switchtotag = true }},
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+                     buttons = clientbuttons,
+                     maximized_horizontal = false,
+                     maximized_vertical = false
+                   } 
+    },
+    { rule  = { class = "vlc" },
+      properties = { floating = true },
+    },
+    { rule = { class = "nitrogen" },
+      properties = { floating = true },
+    },
+    { rule = { class= "conky" },
+      properties = { border_width = 0 } 
+    },
+    { rule  = { class = "xfce4-terminal" },
+      properties = { floating = true, opacity = 0.9 },
+      callback = function (c)
+        local clientgeom = c:geometry()
+        local screengeom = screen[mouse.screen].workarea
+
+        local width = screengeom.width * 0.60
+        local height = screengeom.height * 0.50
+
+        local x = screengeom.x + (screengeom.width - width) / 2
+        local y = screengeom.y + (screengeom.height - height)
+
+        c:geometry({ x= x, y = y, width = width, height = height })
+      end,
+    },
 }
 -- }}}
 

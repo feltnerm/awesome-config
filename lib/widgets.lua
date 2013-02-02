@@ -10,7 +10,7 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
-mystatusbox = {}
+mystatusbar = awful.wibox({ position = "bottom", screen = 1, ontop = false, width = 1, height = 16 })
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -62,38 +62,6 @@ local space = wibox.widget.textbox(" ")
 local spacer = wibox.widget.textbox("  ")
 local extended_spacer = wibox.widget.textbox("    ")
 
-local memwidget_text = wibox.widget.textbox("MEM:")
-local memwidget = awful.widget.progressbar()
-memwidget:set_width(8)
-memwidget:set_height(10)
-memwidget:set_vertical(true)
-memwidget:set_background_color("#494B4F")
-memwidget:set_border_color(nil)
-memwidget:set_color("#AECF96")
---memwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
-vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
-
-local cpuwidget_text = wibox.widget.textbox("CPU:")
-local cpuwidget = awful.widget.progressbar()
-cpuwidget:set_width(8)
-cpuwidget:set_height(10)
-cpuwidget:set_vertical(true)
-cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_border_color(nil)
-cpuwidget:set_color("#AECF96")
-vicious.register(cpuwidget, vicious.widgets.mem, "$1", 13)
-
-local batwidget_text = wibox.widget.textbox("BAT:")
-local batwidget = awful.widget.progressbar()
-batwidget:set_width(8)
-batwidget:set_height(10)
-batwidget:set_vertical(true)
-batwidget:set_background_color("#494B4F")
-batwidget:set_border_color(nil)
-batwidget:set_color("#AECF96")
-vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
-
-
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -134,28 +102,6 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 
-    mystatusbox[s] = awful.wibox({ position = "bottom", screen = s})
-    local st_left_layout = wibox.layout.fixed.horizontal()
-    st_left_layout:add(spacer)
-    st_left_layout:add(batwidget_text)
-    st_left_layout:add(batwidget)
-    st_left_layout:add(space)
-    st_left_layout:add(cpuwidget_text)
-    st_left_layout:add(cpuwidget)
-    st_left_layout:add(space)
-    st_left_layout:add(memwidget_text)
-    st_left_layout:add(memwidget)
-    st_left_layout:add(space)
-    st_left_layout:add(extended_spacer)
-    local st_middle_layout = wibox.layout.fixed.horizontal()
-    local st_right_layout = wibox.layout.fixed.horizontal()
-    st_right_layout:add(spacer)
-    --st_right_layout:add(mpdwidget)
-    local st_layout = wibox.layout.align.horizontal()
-    st_layout:set_left(st_left_layout)
-    st_layout:set_middle(st_middle_layout)
-    st_layout:set_right(st_right_layout)
-    mystatusbox[s]:set_widget(st_layout)
 end
 -- }}}
 
