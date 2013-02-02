@@ -3,7 +3,7 @@ local gears = require("gears")
 local theme_path = awful.util.getdir("config") .. "/themes/" .. env.theme .. "/theme.lua"
 
 beautiful.init(theme_path)
-theme.font = "Ubuntu 9"
+theme.font = "Droid Sans 9"
 theme.taglist_font = "Terminus 14"
 
 print("[awesome] Theme Intialized: " .. env.theme)

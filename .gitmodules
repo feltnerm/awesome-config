@@ -14,5 +14,5 @@
 	path = eminent
 	url = git://git.glacicle.org/awesome/eminent.git
 [submodule "awesome-obvious"]
-	path = bvious
+	path = obvious
 	url = git://git.mercenariesguild.net/obvious.git

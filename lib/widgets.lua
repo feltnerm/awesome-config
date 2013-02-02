@@ -10,7 +10,7 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
-conkyspacer = {}
+mystatusbar = awful.wibox({ position = "bottom", screen = 1, ontop = false, width = 1, height = 16 })
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -102,29 +102,6 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 
-    conkyspacer = awful.wibox({ position = "bottom", screen = 1, ontop = false, width = 1, height = 16 })
-    --mystatusbox[s] = awful.wibox({ position = "bottom", screen = s})
-    --local st_left_layout = wibox.layout.fixed.horizontal()
-    --st_left_layout:add(spacer)
-    --st_left_layout:add(batwidget_text)
-    --st_left_layout:add(batwidget)
-    --st_left_layout:add(space)
-    --st_left_layout:add(cpuwidget_text)
-    --st_left_layout:add(cpuwidget)
-    --st_left_layout:add(space)
-    --st_left_layout:add(memwidget_text)
-    --st_left_layout:add(memwidget)
-    --st_left_layout:add(space)
-    --st_left_layout:add(extended_spacer)
-    --local st_middle_layout = wibox.layout.fixed.horizontal()
-    --local st_right_layout = wibox.layout.fixed.horizontal()
-    --st_right_layout:add(spacer)
-    ----st_right_layout:add(mpdwidget)
-    --local st_layout = wibox.layout.align.horizontal()
-    --st_layout:set_left(st_left_layout)
-    --st_layout:set_middle(st_middle_layout)
-    --st_layout:set_right(st_right_layout)
-    --mystatusbox[s]:set_widget(st_layout)
 end
 -- }}}
 
