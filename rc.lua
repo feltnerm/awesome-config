@@ -21,7 +21,7 @@ env = {
     icons_dir   = root_dir .. "/icons/",
     terminal    = "xfce4-terminal",
     editor      = "gvim",
-    browser     = "google-chrome",
+    browser     = "chromium",
     modkey      = "Mod4",
 }
 -- }}}

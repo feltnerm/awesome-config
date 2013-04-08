@@ -1,5 +1,10 @@
 menubar = require("menubar")
 
+local connect_menu = {
+  { "nalanda", function () awful.util.spawn(env.terminal .. ' -T ssh::nalanda -e ssh nalanda') end },
+  { "saraswati", function () awful.util.spawn(env.terminal .. ' -T ssh::saraswati -e ssh saraswati') end },
+}
+
 local leave_menu = {
   { "lock", "xscreensaver --lock" },
   { "restart awm", awesome.restart },
@@ -12,33 +17,31 @@ local leave_menu = {
 
 local monitor_confs = {
   { "default", function ()
-    awful.util.spawn("xrandr --output HDMI1 --off --output LVDS1 --mode 1280x800 --pos 0x0 --rotate normal --output TV1 --off --output VGA1 --off")
+    awful.util.spawn("/home/mark/.screenlayout/default.sh")
   end },
   { "home", function () 
-      awful.util.spawn("xrandr --output HDMI1 --off --output LVDS1 --mode 1280x800 --pos 0x400 --rotate normal --output TV1 --off --output VGA1 --mode 1600x1200 --pos 1280x0 --rotate normal") 
+      awful.util.spawn("/home/mark/.screenlayout/home.sh") 
     end }
-
 }
 
 local wallpaper_menu = {
   { "restore wallpaper", "nitrogen --restore" },
   { "set wallpaper", "nitrogen --save" },
 }
-local looknfeel_menu = {
-  { "displays", monitor_confs },
-  { "gtk", "lxappearance" },
-  { "screensaver", "xscreensaver-command -prefs" },
-  { "wallpaper", wallpaper_menu },
-}
 
 local settings_menu = {
   { "arandr", "arandr" },
-  { "pulseaudio", "paprefs"}
+  { "displays", monitor_confs },
+  { "gtk", "lxappearance" },
+  { "pulseaudio", "paprefs"},
+  { "screensaver", "xscreensaver-command -prefs" },
+  { "wallpaper", wallpaper_menu }
 }
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 mymainmenu = awful.menu({ items = { { "files", genMenu("/home/mark/") },
-                                    { "look 'n' feel", looknfeel_menu },
+                                    { "servers", connect_menu },
+                                    { "__________", nil },
                                     { "settings", settings_menu },
                                     { "leave" , leave_menu }
                                   }

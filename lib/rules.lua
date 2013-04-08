@@ -18,6 +18,12 @@ awful.rules.rules = {
                      maximized_vertical = false
                    } 
     },
+    { rule = { class = "Exe" },
+      properties = { floating = true },
+    },
+    { rule = { class = "anamnesis" },
+      properties = { floating = true },
+    },
     { rule  = { class = "vlc" },
       properties = { floating = true },
     },

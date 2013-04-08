@@ -19,7 +19,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Standard program
-    awful.ful({ modkey,           }, "Return", function () awful.util.spawn(env.terminal) end),
+    awful.key({ modkey,           }, "Return", function () awful.util.spawn(env.terminal) end),
     awful.key({ modkey,           }, "semicolon", function () 
       local matcher = function (c) 
         return awful.rules.match(c, { class = "xfce4-terminal" })
@@ -30,14 +30,16 @@ globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
 
+    awful.key({ modkey            }, "p" ,    function () awful.util.spawn("anamnesis --browse") end),
+
     -- Menubar
     --awful.key({ modkey }, "p", function() menubar.show() end)
     
     -- Restart
-    awful.key({ modkey, "Control", "Alt" }, "r", awesome.restart),
+    --awful.key({ modkey, "Control", "Alt" }, "r", awesome.restart),
 
     -- Quit
-    awful.key({ modkey, "Control", "Alt" }, "q", awesome.quit),
+    --awful.key({ modkey, "Control", "Alt" }, "q", awesome.quit),
 
     -- Restore client
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
@@ -234,9 +236,9 @@ globalkeys = awful.util.table.join(globalkeys,
     awful.key({ modkey }, "b", 
         function() 
             local matcher = function (c)
-              return awful.rules.match(c, { class = "google-chrome" })
+              return awful.rules.match(c, { class = "chromium" })
             end
-            awful.client.run_or_raise("google-chrome", matcher) 
+            awful.client.run_or_raise("chromium", matcher) 
         end)
     -- }}}
 )
